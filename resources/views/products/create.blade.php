@@ -4,15 +4,14 @@
 
 <h1>商品情報登録画面</h1>
 
-    <!-- form -->
     <form action="store" method="post" enctype="multipart/form-data">
-    {{ csrf_field() }}
+    @csrf
         
         <div class="form-group">
             <label>商品名</label>
             <input type="text" name="product_name" value="" class="form-control">
         </div>
-        @if ($errors->first('product_name'))   <!-- ここ追加 -->
+        @if ($errors->first('product_name'))  
         <p class="validation">※{{$errors->first('product_name')}}</p>
         @endif
 
@@ -25,7 +24,7 @@
             @endforeach
         </select>
         </div>
-        @if ($errors->first('company_id'))   <!-- ここ追加 -->
+        @if ($errors->first('company_id'))  
         <p class="validation">※{{$errors->first('company_id')}}</p>
         @endif
 
@@ -33,7 +32,7 @@
             <label>価格</label>
             <input type="text" name="price" value="" class="form-control">
         </div>
-        @if ($errors->first('price'))   <!-- ここ追加 -->
+        @if ($errors->first('price'))  
         <p class="validation">※{{$errors->first('price')}}</p>
         @endif
 
@@ -41,7 +40,7 @@
             <label>在庫数</label>
             <input type="text" name="stock" value="" class="form-control">
         </div>
-        @if ($errors->first('stock'))   <!-- ここ追加 -->
+        @if ($errors->first('stock'))  
         <p class="validation">※{{$errors->first('stock')}}</p>
         @endif
 
@@ -49,7 +48,6 @@
             <label>コメント</label>
             <textarea name="comment" value="" class="form-control"></textarea>
         </div>
-
 
         <div class="form-group">
             <label>商品画像</label>
@@ -59,10 +57,10 @@
         <input type="hidden" name="_token" value="{{csrf_token()}}">
 
         <div class="row">
-          <div class="col-sm-12">
-            <input type="submit" value="登録" class="btn btn-primary">
-            <a href="products" class="btn btn-primary" style="margin:20px;">戻る</a>
+            <div class="col-sm-12">
+                <input type="submit" value="登録" class="btn btn-primary">
+                <a href="products" class="btn btn-primary" style="margin:20px;">戻る</a>
+            </div>
         </div>
-    </div>
     </form>
-@stop
+@endsection

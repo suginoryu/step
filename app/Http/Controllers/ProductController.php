@@ -38,7 +38,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $validator = $request->validate([       // <-- ここがバリデーション部分
+        $validator = $request->validate([      
             'product_name' => ['required'],
             'price' => ['required','integer'],
             'stock' => ['required','integer'],
@@ -47,27 +47,29 @@ class ProductController extends Controller
 
         $img = $request->file('img_path');
         if (isset($img)) {
-            // storage > public > img配下に画像が保存される
             $path = $img->store('img','public');
-            // store処理が実行できたらDBに保存処理を実行
-            if ($path) {
-                // DBに登録する処理
-                Product::create([
-                    'company_id' => $request->company_id,
-                    'img_path' => $path,
-                    'product_name' => $request->product_name,
-                    'price' => $request->price,
-                    'stock' => $request->stock,
-                    'comment' => $request->comment,
-                ]);
-            }
+        } else {
+            $path = "NULL";
+        }
+        try {
+            DB::beginTransaction();
+            Product::create([
+                'company_id' => $request->company_id,
+                'img_path' => $path,
+                'product_name' => $request->product_name,
+                'price' => $request->price,
+                'stock' => $request->stock,
+                'comment' => $request->comment,
+            ]);
+            DB::commit();
+        } catch (Throwable $e) {
+            DB::rollBack();
         }
         return redirect('products');
     }
 
     public function show ($id) {
         $product = Product::getProduct($id);
-        
         return view('products.show', compact('product'));
     }
 
@@ -78,9 +80,9 @@ class ProductController extends Controller
         return view('products.edit', compact('product', 'companies')); 
     }
 
-     public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
-        $validator = $request->validate([       // <-- ここがバリデーション部分
+        $validator = $request->validate([       
             'product_name' => ['required'],
             'price' => ['required','integer'],
             'stock' => ['required','integer'],
@@ -92,29 +94,39 @@ class ProductController extends Controller
         $path = $products->img;
         if (isset($img)) {
             \Storage::disk('public')->delete($path);
-            // storage > public > img配下に画像が保存される
             $path = $img->store('img','public');
+        } else {
+            $path = "NULL";
         }
-         $products->update([
-            'id' => $request->id,
-            'product_name' => $request->product_name,
-            'company_id' => $request->company_id,
-            'price' => $request->price,
-            'stock' => $request->stock,
-            'comment' => $request->comment,
-            'img_path' => $path,
-         ]);
+        try {
+            DB::beginTransaction();
+
+            $products->update([
+                'id' => $request->id,
+                'product_name' => $request->product_name,
+                'company_id' => $request->company_id,
+                'price' => $request->price,
+                'stock' => $request->stock,
+                'comment' => $request->comment,
+                'img_path' => $path,
+            ]);
+            DB::commit();
+        } catch (Throwable $e) {
+            DB::rollBack();
+        }    
         return redirect('products'); 
     }
 
-     public function destroy($id)
+    public function destroy($id)
     {
-        //削除対象レコードを検索
-        $products = Product::find($id);
-        //削除
-        $products->delete();
-        //リダイレクト
+        try {
+            DB::beginTransaction();
+            $products = Product::find($id);
+            $products->delete();
+            DB::commit();
+        } catch (Throwable $e) {
+            DB::rollBack();
+        }
         return redirect('products');
     }
 }
-    

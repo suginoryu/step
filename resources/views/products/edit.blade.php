@@ -4,7 +4,6 @@
 
 <h1>商品情報編集画面</h1>
 
-    <!-- form -->
     <form method="post" action="{{ route('products.update', ['id' => $product->id] ) }}" enctype="multipart/form-data">
     @csrf
 
@@ -17,7 +16,7 @@
             <label>商品名</label>
             <input type="text" name="product_name" value="{{ $product->product_name }}" class="form-control">
         </div>
-        @if ($errors->first('product_name'))   <!-- ここ追加 -->
+        @if ($errors->first('product_name'))  
         <p class="validation">※{{$errors->first('product_name')}}</p>
         @endif
 
@@ -34,7 +33,7 @@
             @endforeach
         </select>
         </div>
-        @if ($errors->first('company_id'))   <!-- ここ追加 -->
+        @if ($errors->first('company_id'))   
         <p class="validation">※{{$errors->first('company_id')}}</p>
         @endif
 
@@ -43,7 +42,7 @@
             <label>価格</label>
             <input type="text" name="price" value="{{ $product->price }}" class="form-control">
         </div>
-        @if ($errors->first('price'))   <!-- ここ追加 -->
+        @if ($errors->first('price'))   
         <p class="validation">※{{$errors->first('price')}}</p>
         @endif
 
@@ -52,7 +51,7 @@
             <label>在庫数</label>
             <input type="text" name="stock" value="{{ $product->stock }}" class="form-control">
         </div>
-        @if ($errors->first('stock'))   <!-- ここ追加 -->
+        @if ($errors->first('stock'))  
         <p class="validation">※{{$errors->first('stock')}}</p>
         @endif
 
@@ -72,4 +71,4 @@
 
         <button type="button" class="btn btn-primary" onClick="history.back()">戻る</button>
     </form>
-@stop
+@endsection
