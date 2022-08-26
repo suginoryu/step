@@ -27,3 +27,4 @@ Route::get('/show/{id}', [ProductController::class, 'show'])->name('products.sho
 Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
 Route::post('/update/{id}', [ProductController::class, 'update'])->name('products.update'); 
 Route::post('/destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy'); 
+Route::get('/search', [ProductController::class, 'search'])->name('products.search'); 

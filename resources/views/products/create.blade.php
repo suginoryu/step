@@ -12,7 +12,7 @@
             <input type="text" name="product_name" value="" class="form-control">
         </div>
         @if ($errors->first('product_name'))  
-        <p class="validation">※{{$errors->first('product_name')}}</p>
+            <p class="validation">※{{$errors->first('product_name')}}</p>
         @endif
 
         <div class="form-group">
@@ -25,7 +25,7 @@
         </select>
         </div>
         @if ($errors->first('company_id'))  
-        <p class="validation">※{{$errors->first('company_id')}}</p>
+            <p class="validation">※{{$errors->first('company_id')}}</p>
         @endif
 
         <div class="form-group">
@@ -33,7 +33,7 @@
             <input type="text" name="price" value="" class="form-control">
         </div>
         @if ($errors->first('price'))  
-        <p class="validation">※{{$errors->first('price')}}</p>
+            <p class="validation">※{{$errors->first('price')}}</p>
         @endif
 
         <div class="form-group">
@@ -41,7 +41,7 @@
             <input type="text" name="stock" value="" class="form-control">
         </div>
         @if ($errors->first('stock'))  
-        <p class="validation">※{{$errors->first('stock')}}</p>
+            <p class="validation">※{{$errors->first('stock')}}</p>
         @endif
 
         <div class="form-group">
@@ -63,4 +63,5 @@
             </div>
         </div>
     </form>
+    
 @endsection
