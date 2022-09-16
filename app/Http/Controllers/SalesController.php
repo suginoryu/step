@@ -13,13 +13,13 @@ class SalesController extends Controller
    public function purchase(Request $request)
    {
         $product_id = $request->product_id;
-        $product = $this->findProduct($product_id);
+        $product = Product::find($product_id);
         if($product->stock <= 0) {
             return '購入NG';
         }
         try {
             DB::beginTransaction();
-            $this->addSales($product_id);
+            Sale::create(['product_id' => $product_id]);
             $product->stock = $product->stock - 1;
             $product->save();
             DB::commit();
@@ -28,15 +28,4 @@ class SalesController extends Controller
         }
         return '購入OK';
    }
-
-   private function addSales($product_id)
-   {
-        Sale::create(['product_id' => $product_id]);
-   }
-
-   private function findProduct($product_id)
-   {
-        return Product::find($product_id);
-   }
-
 }

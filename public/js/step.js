@@ -25,7 +25,7 @@ $(function(){
                 tags += "<tr>";
                 tags += "<td class='product_id'>" + json['products'][i].id + "</td>";
                 tags += "<td>";
-                tags += "<img src='http://localhost:8888/step/public/storage/" + json['products'][i].img_path + "' width='15%'>"; 
+                tags += "<img src='../../storage/" + json['products'][i].img_path + "' width='15%'>"; 
                 tags += "</td>";
                 tags += "<td>" + json['products'][i].product_name + "</td>";
                 tags += "<td>" + json['products'][i].price + "</td>";
